@@ -32,6 +32,10 @@ function Comments() {
     const response = await doGet(`/tweet/${id}`, `${userLogged.token}`);
   }
 
+  async function getComments() {
+    await doGet(`/reply/${id}`, `${userLogged.token}`);
+  }
+
   async function postComment() {
     await doPost(`/reply`, { tweetId: id, content: text }, `${userLogged.token}`);
   }
@@ -42,6 +46,10 @@ function Comments() {
       setLoading(false);
     }, 2000);
   }, []);
+
+  useEffect(() => {
+    getComments;
+  }, [postComment]);
 
   return (
     <>
