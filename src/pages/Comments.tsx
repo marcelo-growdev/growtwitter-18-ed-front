@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { doGet } from '../services/api';
+import { doGet, doPost } from '../services/api';
 import DefaultLayout from '../config/layout/DefaultLayout';
 import TweetStyled from '../components/tweet/TweetStyled';
 import TweetDivStyled from '../components/tweet/TweetDivStyled';
@@ -10,9 +10,12 @@ import HeartTweet from '../components/tweet/HeartTweet';
 import { ptBR } from 'date-fns/locale';
 import TextareaStyled from '../components/comments/TextareaStyled';
 import TextContainer from '../components/comments/TextContainer';
+import { useState } from 'react';
+import ButtonDefault from '../components/button/ButtonDefault';
 
 function Comments() {
   const { id } = useParams();
+  const [text, setText] = useState<string>('');
   const userLogged = JSON.parse(localStorage.getItem('userLogged') || '{}');
   const tweet = { id: id, userId: id, content: 'qualquer coisa so pra' };
   const date = new Date();
@@ -23,8 +26,13 @@ function Comments() {
   ];
 
   async function getTweet() {
-    const response = await doGet(`/tweet/${id}`, userLogged);
+    const response = await doGet(`/tweet/${id}`, `${userLogged.token}`);
   }
+
+  async function postComment() {
+    await doPost(`/reply`, { tweetId: id, content: text }, `${userLogged.token}`);
+  }
+
   return (
     <>
       <DefaultLayout>
@@ -54,7 +62,13 @@ function Comments() {
           </TweetDivStyled>
         </TweetStyled>
         <TextContainer>
-          <TextareaStyled />
+          <Avatar useBorder={false} useWidth={true} src={tweet.userId?.replace(/[^0-9\.]+/g, '') || ''} />
+          <TextareaStyled
+            value={text}
+            onChange={e => setText(e.target.value)}
+            placeholder="Digite seu comentario aqui"
+          />
+          <ButtonDefault bigButton={false} lessRound={true} label="Comentar" action={postComment} />
         </TextContainer>
         <TweetStyled>
           {comments.map(item => {
