@@ -5,6 +5,7 @@ import Login from '../pages/Login';
 import CreateAccount from '../pages/CreateAccount';
 import Explore from '../pages/Explore';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Comments from '../pages/Comments';
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,10 @@ const router = createBrowserRouter([
   {
     path: '/explore',
     element: <Explore />,
-    errorElement: <Error404 />,
+  },
+  {
+    path: '/tweet/:id',
+    element: <Comments />,
   },
   {
     path: '/create-account',

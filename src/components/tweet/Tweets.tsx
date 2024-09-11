@@ -9,6 +9,7 @@ import { TweetContext } from '../../contexts/TweetsContext';
 import { formatDistance } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import TweetType from '../../types/TweetType';
+import { Link } from 'react-router-dom';
 
 interface TweetsProps {
   user: boolean;
@@ -57,7 +58,9 @@ function Tweets({ user }: TweetsProps) {
                 <p>{item.content}</p>
                 <div style={{ display: 'flex', gap: '1rem' }}>
                   <button>
-                    <img src={commentTweet} alt="comment-tweet" />
+                    <Link to={`/tweet/${item.id}`}>
+                      <img src={commentTweet} alt="comment-tweet" />
+                    </Link>
                     <p>0</p>
                   </button>
                   <HeartTweet
