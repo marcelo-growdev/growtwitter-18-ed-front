@@ -58,7 +58,7 @@ function Tweets({ user }: TweetsProps) {
                 <p>{item.content}</p>
                 <div style={{ display: 'flex', gap: '1rem' }}>
                   <button>
-                    <Link to={`/tweet/${item.id}`}>
+                    <Link to={`/tweet/${item.id}`} style={{ height: '13px' }}>
                       <img src={commentTweet} alt="comment-tweet" />
                     </Link>
                     <p>0</p>

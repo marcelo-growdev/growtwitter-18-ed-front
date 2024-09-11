@@ -13,6 +13,7 @@ import TextContainer from '../components/comments/TextContainer';
 import { useEffect, useState } from 'react';
 import ButtonDefault from '../components/button/ButtonDefault';
 import { CircularProgress } from '@mui/material';
+import ExploreStyled from '../components/explore/ExploreStyled';
 
 function Comments() {
   const { id } = useParams();
@@ -39,6 +40,7 @@ function Comments() {
   async function postComment() {
     await doPost(`/reply`, { tweetId: id, content: text }, `${userLogged.token}`);
   }
+
   useEffect(() => {
     setLoading(true);
 
@@ -58,8 +60,10 @@ function Comments() {
           <CircularProgress />
         ) : (
           <>
+            <ExploreStyled>
+              <h2>Comentarios</h2>
+            </ExploreStyled>
             <TweetStyled>
-              <h1>COMENTARIOS</h1>
               <TweetDivStyled>
                 <Avatar useBorder={false} useWidth={true} src={tweet.userId?.replace(/[^0-9\.]+/g, '') || ''} />
                 <div>
@@ -74,7 +78,7 @@ function Comments() {
                       <p>0</p>
                     </button>
                     {/* <HeartTweet
-                  getTweets={getTweets}
+                  getTweets={getTweet}
                   tweet={item}
                   enable={item.likes.find(like => like.userId === userLogged.id) ? true : false}
                   likesLength={`${item.likes.length}`}
@@ -90,7 +94,7 @@ function Comments() {
                 onChange={e => setText(e.target.value)}
                 placeholder="Digite seu comentario aqui"
               />
-              <ButtonDefault bigButton={false} lessRound={true} label="Comentar" action={postComment} />
+              <button onClick={() => postComment()}>Comentar</button>
             </TextContainer>
             <TweetStyled>
               {comments.map(item => {
