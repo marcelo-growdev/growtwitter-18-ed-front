@@ -8,6 +8,7 @@ import { formatDistance } from 'date-fns';
 import commentTweet from '/icone_responder.svg';
 import HeartTweet from '../components/tweet/HeartTweet';
 import { ptBR } from 'date-fns/locale';
+import TextareaStyled from '../components/comments/TextareaStyled';
 
 function Comments() {
   const { id } = useParams();
@@ -51,7 +52,37 @@ function Comments() {
             </div>
           </TweetDivStyled>
         </TweetStyled>
-        <textarea></textarea>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <TextareaStyled />
+        </div>
+        <TweetStyled>
+          {comments.map(item => {
+            return (
+              <TweetDivStyled key={item.id}>
+                <Avatar useBorder={false} useWidth={true} src={tweet.userId?.replace(/[^0-9\.]+/g, '') || ''} />
+                <div>
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    <b>aqui vai o nome do usuario</b>
+                    <p>@UserName • {formatDistance(timestamp, timestamp, { locale: ptBR })}</p>
+                  </div>
+                  <p>{item.content}</p>
+                  <div style={{ display: 'flex', gap: '1rem' }}>
+                    <button>
+                      <img src={commentTweet} alt="comment-tweet" />
+                      <p>0</p>
+                    </button>
+                    {/* <HeartTweet
+                  getTweets={getTweets}
+                  tweet={item}
+                  enable={item.likes.find(like => like.userId === userLogged.id) ? true : false}
+                  likesLength={`${item.likes.length}`}
+                /> */}
+                  </div>
+                </div>
+              </TweetDivStyled>
+            );
+          })}
+        </TweetStyled>
       </DefaultLayout>
     </>
   );
