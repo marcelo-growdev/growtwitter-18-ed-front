@@ -9,6 +9,7 @@ import commentTweet from '/icone_responder.svg';
 import HeartTweet from '../components/tweet/HeartTweet';
 import { ptBR } from 'date-fns/locale';
 import TextareaStyled from '../components/comments/TextareaStyled';
+import TextContainer from '../components/comments/TextContainer';
 
 function Comments() {
   const { id } = useParams();
@@ -52,9 +53,9 @@ function Comments() {
             </div>
           </TweetDivStyled>
         </TweetStyled>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <TextContainer>
           <TextareaStyled />
-        </div>
+        </TextContainer>
         <TweetStyled>
           {comments.map(item => {
             return (
